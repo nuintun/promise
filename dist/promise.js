@@ -32,6 +32,11 @@
       };
 
   /**
+   * @function noop
+   */
+  function noop() {}
+
+  /**
    * @module native
    * @license MIT
    * @version 2017/12/04
@@ -622,7 +627,7 @@
    * @returns {Promise}
    */
   Promise.resolve = function(value) {
-    if (value && value.constructor === Promise) {
+    if (value && value instanceof Promise) {
       return value;
     }
 
@@ -640,7 +645,7 @@
    *
    */
   Promise.reject = function(reason) {
-    var promise = new Promise(function() {});
+    var promise = new Promise(noop);
 
     // Do not go through resolver.reject() because an immediately rejected promise
     // always has no callbacks which would trigger an unnecessary warning

@@ -5,7 +5,7 @@
  */
 
 import Resolver from './resolver';
-import { isFunction, isArray } from './utils';
+import { isFunction, isArray, noop } from './utils';
 
 /**
  * @class Promise
@@ -123,7 +123,7 @@ Promise.prototype = {
  * @returns {Promise}
  */
 Promise.resolve = function(value) {
-  if (value && value.constructor === Promise) {
+  if (value && value instanceof Promise) {
     return value;
   }
 
@@ -141,7 +141,7 @@ Promise.resolve = function(value) {
  *
  */
 Promise.reject = function(reason) {
-  var promise = new Promise(function() {});
+  var promise = new Promise(noop);
 
   // Do not go through resolver.reject() because an immediately rejected promise
   // always has no callbacks which would trigger an unnecessary warning

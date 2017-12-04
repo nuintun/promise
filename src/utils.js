@@ -25,3 +25,8 @@ export var isArray = isFunction(Array.isArray)
   : function(value) {
       return toString.call(value) === '[object Array]';
     };
+
+/**
+ * @function noop
+ */
+export function noop() {}
