@@ -141,12 +141,14 @@ Promise.resolve = function(value) {
  *
  */
 Promise.reject = function(reason) {
-  var promise = new this(function() {});
+  var promise = new Promise(function() {});
 
   // Do not go through resolver.reject() because an immediately rejected promise
   // always has no callbacks which would trigger an unnecessary warning
-  promise._resolver._result = reason;
-  promise._resolver._status = 'rejected';
+  var resolver = promise._resolver;
+
+  resolver._result = reason;
+  resolver._status = 'rejected';
 
   return promise;
 };
