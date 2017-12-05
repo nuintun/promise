@@ -269,11 +269,6 @@
    */
 
   /**
-   * @const undef
-   */
-  var undef = void 0;
-
-  /**
    * @function isFunction
    * @param {any} value
    * @returns {boolean}
@@ -698,7 +693,7 @@
      * @returns {Promise} A new promise modified by the behavior of the error callback
      */
     catch: function(onRejected) {
-      return this.then(undef, onRejected);
+      return this.then(void 0, onRejected);
     }
   };
 

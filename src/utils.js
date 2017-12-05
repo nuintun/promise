@@ -7,11 +7,6 @@
 import native from './microtask/native';
 
 /**
- * @const undef
- */
-export var undef = void 0;
-
-/**
  * @function isFunction
  * @param {any} value
  * @returns {boolean}
