@@ -640,7 +640,15 @@
     }
   }
 
+  // Set name
+  Promise.name = 'Promise';
+
+  // Set prototype
   Promise.prototype = {
+    /**
+     * @property constructor
+     */
+    constructor: Promise,
     /**
      * @method then
      * @description
