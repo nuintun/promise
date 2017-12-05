@@ -274,6 +274,10 @@ Resolver.prototype = {
   _uncaught: function() {
     var error = this._value;
 
-    printError('Uncaught', error.stack || error.name + ': ' + error.message);
+    if (error instanceof Error) {
+      printError('Uncaught', error.stack || error.name + ': ' + error.message);
+    } else {
+      printError('Uncaught Error:', error);
+    }
   }
 };

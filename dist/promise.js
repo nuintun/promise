@@ -244,17 +244,12 @@
         return toString.call(value) === '[object Array]';
       };
 
-  /**
-   * @function noop
-   */
-  function noop() {}
-
   var console = window.console;
 
   /**
    * @function printError
    */
-  var printError = console && console.error ? console.error : noop;
+  var printError = console && console.error ? console.error : function() {};
 
   /**
    * @module resolver
@@ -529,7 +524,11 @@
     _uncaught: function() {
       var error = this._value;
 
-      printError('Uncaught', error.stack || error.name + ': ' + error.message);
+      if (error instanceof Error) {
+        printError('Uncaught', error.stack || error.name + ': ' + error.message);
+      } else {
+        printError('Uncaught Error:', error);
+      }
     }
   };
 
@@ -676,16 +675,9 @@
    *
    */
   Promise.reject = function(reason) {
-    var promise = new Promise(noop);
-
-    // Do not go through resolver.reject() because an immediately rejected promise
-    // always has no callbacks which would trigger an unnecessary warning
-    var resolver = promise._resolver;
-
-    resolver._result = reason;
-    resolver._status = 'rejected';
-
-    return promise;
+    return new Promise(function(resolve, reject) {
+      reject(reason);
+    });
   };
 
   /**

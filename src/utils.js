@@ -28,14 +28,9 @@ export var isArray = isFunction(Array.isArray)
       return toString.call(value) === '[object Array]';
     };
 
-/**
- * @function noop
- */
-export function noop() {}
-
 var console = this.console;
 
 /**
  * @function printError
  */
-export var printError = console && console.error ? console.error : noop;
+export var printError = console && console.error ? console.error : function() {};
