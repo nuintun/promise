@@ -5,7 +5,7 @@
  */
 
 import Resolver from './resolver';
-import { isFunction, isArray } from './utils';
+import { undef, isFunction, isArray } from './utils';
 
 /**
  * @class Promise
@@ -116,7 +116,7 @@ Promise.prototype = {
    * @returns {Promise} A new promise modified by the behavior of the error callback
    */
   catch: function(onRejected) {
-    return this.then(undefined, onRejected);
+    return this.then(undef, onRejected);
   }
 };
 

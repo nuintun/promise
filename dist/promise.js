@@ -268,7 +268,10 @@
    * @version 2017/12/05
    */
 
-  var toString = Object.prototype.toString;
+  /**
+   * @const undef
+   */
+  var undef = void 0;
 
   /**
    * @function isFunction
@@ -278,6 +281,8 @@
   function isFunction(value) {
     return typeof value === 'function';
   }
+
+  var toString = Object.prototype.toString;
 
   /**
    * @function isArray
@@ -693,7 +698,7 @@
      * @returns {Promise} A new promise modified by the behavior of the error callback
      */
     catch: function(onRejected) {
-      return this.then(undefined, onRejected);
+      return this.then(undef, onRejected);
     }
   };
 

@@ -6,7 +6,10 @@
 
 import native from './microtask/native';
 
-var toString = Object.prototype.toString;
+/**
+ * @const undef
+ */
+export var undef = void 0;
 
 /**
  * @function isFunction
@@ -16,6 +19,8 @@ var toString = Object.prototype.toString;
 export function isFunction(value) {
   return typeof value === 'function';
 }
+
+var toString = Object.prototype.toString;
 
 /**
  * @function isArray
