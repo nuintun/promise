@@ -158,7 +158,6 @@ Resolver.prototype = {
    * @param {any} value A promise, thenable or regular value
    */
   _unwrap: function(value) {
-    var then;
     var self = this;
     var unwrapped = false;
 
@@ -167,7 +166,7 @@ Resolver.prototype = {
     }
 
     try {
-      then = value.then;
+      var then = value.then;
 
       if (isFunction(then)) {
         then.call(
@@ -206,18 +205,18 @@ Resolver.prototype = {
    * @param {Function} [errback] function to execute if the Resolver resolves unsuccessfully
    */
   _addCallbacks: function(callback, errback) {
-    var callbackList = this._callbacks;
-    var errbackList = this._errbacks;
+    var callbacks = this._callbacks;
+    var errbacks = this._errbacks;
 
     // Because the callback and errback are represented by a Resolver, it
     // must be fulfilled or rejected to propagate through the then() chain.
     // The same logic applies to resolve() and reject() for fulfillment.
-    if (callbackList) {
-      callbackList.push(callback);
+    if (callbacks) {
+      callbacks.push(callback);
     }
 
-    if (errbackList) {
-      errbackList.push(errback);
+    if (errbacks) {
+      errbacks.push(errback);
     }
 
     switch (this._status) {
