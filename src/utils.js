@@ -4,6 +4,8 @@
  * @version 2017/12/04
  */
 
+import native from './microtask/native';
+
 var toString = Object.prototype.toString;
 
 /**
@@ -30,3 +32,10 @@ export var isArray = isFunction(Array.isArray)
  * @function noop
  */
 export function noop() {}
+
+var console = this.console;
+
+/**
+ * @function printError
+ */
+export var printError = console && console.error ? console.error : noop;

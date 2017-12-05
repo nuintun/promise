@@ -4,39 +4,6 @@
   if (window.Promise) return;
 
   /**
-   * @module utils
-   * @license MIT
-   * @version 2017/12/04
-   */
-
-  var toString = Object.prototype.toString;
-
-  /**
-   * @function isFunction
-   * @param {any} value
-   * @returns {boolean}
-   */
-  function isFunction(value) {
-    return typeof value === 'function';
-  }
-
-  /**
-   * @function isArray
-   * @param {any} value
-   * @returns {boolean}
-   */
-  var isArray = isFunction(Array.isArray)
-    ? Array.isArray
-    : function(value) {
-        return toString.call(value) === '[object Array]';
-      };
-
-  /**
-   * @function noop
-   */
-  function noop() {}
-
-  /**
    * @module native
    * @license MIT
    * @version 2017/12/04
@@ -250,6 +217,46 @@
   }
 
   /**
+   * @module utils
+   * @license MIT
+   * @version 2017/12/04
+   */
+
+  var toString = Object.prototype.toString;
+
+  /**
+   * @function isFunction
+   * @param {any} value
+   * @returns {boolean}
+   */
+  function isFunction(value) {
+    return typeof value === 'function';
+  }
+
+  /**
+   * @function isArray
+   * @param {any} value
+   * @returns {boolean}
+   */
+  var isArray = isFunction(Array.isArray)
+    ? Array.isArray
+    : function(value) {
+        return toString.call(value) === '[object Array]';
+      };
+
+  /**
+   * @function noop
+   */
+  function noop() {}
+
+  var console = window.console;
+
+  /**
+   * @function printError
+   */
+  var printError = console && console.error ? console.error : noop;
+
+  /**
    * @module resolver
    * @license MIT
    * @version 2017/12/04
@@ -294,10 +301,18 @@
     /**
      * @private
      * @type {any}
-     * @property _result
+     * @property _value
      * @description This value that this promise represents.
      */
-    this._result = null;
+    this._value = null;
+
+    /**
+     * @private
+     * @type {boolean}
+     * @property _chained
+     * @description This value that promise has chained.
+     */
+    this._chained = false;
   }
 
   Resolver.prototype = {
@@ -314,12 +329,12 @@
       var status = this._status;
 
       if (status === 'pending' || status === 'accepted') {
-        this._result = value;
+        this._value = value;
         this._status = 'fulfilled';
       }
 
       if (this._status === 'fulfilled') {
-        this._notify(this._callbacks, this._result);
+        this._notify(this._callbacks, this._value);
 
         // Reset the callback list so that future calls to fulfill()
         // won't call the same callbacks again. Promises keep a list
@@ -347,12 +362,12 @@
       var status = this._status;
 
       if (status === 'pending' || status === 'accepted') {
-        this._result = reason;
+        this._value = reason;
         this._status = 'rejected';
       }
 
       if (this._status === 'rejected') {
-        this._notify(this._errbacks, this._result);
+        this._notify(this._errbacks, this._value);
 
         // See fulfill()
         this._callbacks = null;
@@ -472,10 +487,10 @@
           this._unwrap(this._value);
           break;
         case 'fulfilled':
-          this.fulfill(this._result);
+          this.fulfill(this._value);
           break;
         case 'rejected':
-          this.reject(this._result);
+          this.reject(this._value);
           break;
       }
     },
@@ -488,19 +503,32 @@
      */
     _notify: function(subs, result) {
       // Since callback lists are reset synchronously, the subs list never
-      // changes after _notify() receives it. Avoid calling Y.soon() for
-      // an empty list
-      if (subs.length) {
+      // changes after _notify() receives it.
+      microtask(function(self) {
+        if (!self._chained) {
+          return self._uncaught();
+        }
+
         // Calling all callbacks after microtask to guarantee
         // asynchronicity. Because setTimeout can cause unnecessary
         // delays that *can* become noticeable in some situations
         // (especially in Node.js)
-        microtask(function() {
+        if (subs.length) {
           for (var i = 0, len = subs.length; i < len; ++i) {
             subs[i](result);
           }
-        });
-      }
+        }
+      }, this);
+    },
+    /**
+     * @private
+     * @method _uncaught
+     * @deprecated Output uncaught error
+     */
+    _uncaught: function() {
+      var error = this._value;
+
+      printError('Uncaught', error.stack || error.name + ': ' + error.message);
     }
   };
 
@@ -584,13 +612,16 @@
       // Using this.constructor allows for customized promises to be returned instead of plain ones
       var resolve;
       var reject;
+      var resolver = this._resolver;
+
+      resolver._chained = true;
 
       var promise = new Promise(function(_resolve, _reject) {
         resolve = _resolve;
         reject = _reject;
       });
 
-      this._resolver._addCallbacks(
+      resolver._addCallbacks(
         isFunction(onFulfilled) ? makeCallback(promise, resolve, reject, onFulfilled) : resolve,
         isFunction(onRejected) ? makeCallback(promise, resolve, reject, onRejected) : reject
       );

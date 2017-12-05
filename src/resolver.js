@@ -4,8 +4,8 @@
  * @version 2017/12/04
  */
 
-import { isFunction } from './utils';
 import microtask from './microtask/index';
+import { isFunction, printError } from './utils';
 
 /**
  * @class Resolver
@@ -46,10 +46,18 @@ export default function Resolver() {
   /**
    * @private
    * @type {any}
-   * @property _result
+   * @property _value
    * @description This value that this promise represents.
    */
-  this._result = null;
+  this._value = null;
+
+  /**
+   * @private
+   * @type {boolean}
+   * @property _chained
+   * @description This value that promise has chained.
+   */
+  this._chained = false;
 }
 
 Resolver.prototype = {
@@ -66,12 +74,12 @@ Resolver.prototype = {
     var status = this._status;
 
     if (status === 'pending' || status === 'accepted') {
-      this._result = value;
+      this._value = value;
       this._status = 'fulfilled';
     }
 
     if (this._status === 'fulfilled') {
-      this._notify(this._callbacks, this._result);
+      this._notify(this._callbacks, this._value);
 
       // Reset the callback list so that future calls to fulfill()
       // won't call the same callbacks again. Promises keep a list
@@ -99,12 +107,12 @@ Resolver.prototype = {
     var status = this._status;
 
     if (status === 'pending' || status === 'accepted') {
-      this._result = reason;
+      this._value = reason;
       this._status = 'rejected';
     }
 
     if (this._status === 'rejected') {
-      this._notify(this._errbacks, this._result);
+      this._notify(this._errbacks, this._value);
 
       // See fulfill()
       this._callbacks = null;
@@ -224,10 +232,10 @@ Resolver.prototype = {
         this._unwrap(this._value);
         break;
       case 'fulfilled':
-        this.fulfill(this._result);
+        this.fulfill(this._value);
         break;
       case 'rejected':
-        this.reject(this._result);
+        this.reject(this._value);
         break;
     }
   },
@@ -240,18 +248,31 @@ Resolver.prototype = {
    */
   _notify: function(subs, result) {
     // Since callback lists are reset synchronously, the subs list never
-    // changes after _notify() receives it. Avoid calling Y.soon() for
-    // an empty list
-    if (subs.length) {
+    // changes after _notify() receives it.
+    microtask(function(self) {
+      if (!self._chained) {
+        return self._uncaught();
+      }
+
       // Calling all callbacks after microtask to guarantee
       // asynchronicity. Because setTimeout can cause unnecessary
       // delays that *can* become noticeable in some situations
       // (especially in Node.js)
-      microtask(function() {
+      if (subs.length) {
         for (var i = 0, len = subs.length; i < len; ++i) {
           subs[i](result);
         }
-      });
-    }
+      }
+    }, this);
+  },
+  /**
+   * @private
+   * @method _uncaught
+   * @deprecated Output uncaught error
+   */
+  _uncaught: function() {
+    var error = this._value;
+
+    printError('Uncaught', error.stack || error.name + ': ' + error.message);
   }
 };

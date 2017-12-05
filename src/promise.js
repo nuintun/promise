@@ -81,13 +81,16 @@ Promise.prototype = {
     // Using this.constructor allows for customized promises to be returned instead of plain ones
     var resolve;
     var reject;
+    var resolver = this._resolver;
+
+    resolver._chained = true;
 
     var promise = new Promise(function(_resolve, _reject) {
       resolve = _resolve;
       reject = _reject;
     });
 
-    this._resolver._addCallbacks(
+    resolver._addCallbacks(
       isFunction(onFulfilled) ? makeCallback(promise, resolve, reject, onFulfilled) : resolve,
       isFunction(onRejected) ? makeCallback(promise, resolve, reject, onRejected) : reject
     );
