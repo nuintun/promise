@@ -89,7 +89,7 @@
      * @returns {boolean}
      */
     support: function() {
-      // IE MessageChannel slower than image error
+      // IE MessageChannel slower than script state change
       return !native(VBArray) && native(MessageChannel);
     },
     /**
