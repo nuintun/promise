@@ -505,10 +505,6 @@
       // Since callback lists are reset synchronously, the subs list never
       // changes after _notify() receives it.
       microtask(function(self) {
-        if (!self._chained) {
-          return self._uncaught();
-        }
-
         // Calling all callbacks after microtask to guarantee
         // asynchronicity. Because setTimeout can cause unnecessary
         // delays that *can* become noticeable in some situations
@@ -517,6 +513,11 @@
           for (var i = 0, len = subs.length; i < len; ++i) {
             subs[i](result);
           }
+        }
+
+        // If non catch by user call default _uncaught method
+        if (!self._chained && self._status === 'rejected') {
+          self._uncaught();
         }
       }, this);
     },
