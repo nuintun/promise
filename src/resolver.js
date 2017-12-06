@@ -158,12 +158,9 @@ Resolver.prototype = {
 
       // Exec promise or thenable then method
       try {
-        var then = value.then;
-
         // If then is function
-        if (isFunction(then)) {
-          then.call(
-            value,
+        if (isFunction(value.then)) {
+          value.then(
             function(value) {
               if (!unwrapped) {
                 unwrapped = true;
