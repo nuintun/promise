@@ -91,14 +91,12 @@ Promise.prototype = {
     var reject;
     var resolver = this._resolver;
 
-    resolver._chained = true;
-
     var promise = new Promise(function(_resolve, _reject) {
       resolve = _resolve;
       reject = _reject;
     });
 
-    resolver._addCallbacks(
+    resolver.addCallbacks(
       isFunction(onFulfilled) ? makeCallback(promise, resolve, reject, onFulfilled) : resolve,
       isFunction(onRejected) ? makeCallback(promise, resolve, reject, onRejected) : reject
     );
@@ -262,4 +260,5 @@ function makeCallback(promise, resolve, reject, callback) {
   };
 }
 
+// Exports to global
 this.Promise = Promise;
