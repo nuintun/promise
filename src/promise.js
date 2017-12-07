@@ -172,29 +172,27 @@ Promise.all = function(iterable) {
       return reject(new TypeError('Promise.all expects an array of values or promises'));
     }
 
-    var i = 0;
-    var results = [];
+    var values = [];
     var length = iterable.length;
-    var remaining = iterable.length;
 
-    function oneDone(index) {
+    if (length < 1) {
+      return resolve(values);
+    }
+
+    var remaining = length;
+
+    function oneResolve(index) {
       return function(value) {
-        results[index] = value;
+        values[index] = value;
 
-        remaining--;
-
-        if (!remaining) {
-          resolve(results);
+        if (--remaining === 0) {
+          resolve(values);
         }
       };
     }
 
-    if (length < 1) {
-      return resolve(results);
-    }
-
-    for (; i < length; i++) {
-      Promise.resolve(iterable[i]).then(oneDone(i), reject);
+    for (var i = 0; i < length; i++) {
+      Promise.resolve(iterable[i]).then(oneResolve(i), reject);
     }
   });
 };
@@ -218,7 +216,7 @@ Promise.race = function(iterable) {
     // Just go through the list and resolve and reject at the first change
     // This abuses the fact that calling resolve/reject multiple times
     // doesn't change the state of the returned promise
-    for (var i = 0, count = iterable.length; i < count; i++) {
+    for (var i = 0, length = iterable.length; i < length; i++) {
       Promise.resolve(iterable[i]).then(resolve, reject);
     }
   });
@@ -236,7 +234,7 @@ Promise.race = function(iterable) {
 function makeCallback(promise, resolve, reject, callback) {
   // Make resolve and reject only get one argument
   return function(valueOrReason) {
-    var result;
+    var value;
 
     // Promises model exception handling through callbacks
     // making both synchronous and asynchronous errors behave
@@ -246,17 +244,17 @@ function makeCallback(promise, resolve, reject, callback) {
       // resolution of the parent promise.
       // The function must be called as a normal function, with no
       // special value for |this|, as per Promises A+
-      result = callback(valueOrReason);
+      value = callback(valueOrReason);
     } catch (error) {
       // Calling return only to stop here
       return reject(error);
     }
 
-    if (result === promise) {
+    if (value === promise) {
       return reject(new TypeError('Cannot resolve a promise with itself'));
     }
 
-    resolve(result);
+    resolve(value);
   };
 }
 
