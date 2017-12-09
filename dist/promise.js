@@ -222,13 +222,14 @@
 
   var schedule;
   var queue = [];
+  var draining = false;
   // Use chain: mutation > channel > script > timeout
   var schedules = [mutation, channel, script, timeout];
 
   /**
-   * @function nextTick
+   * @function drain
    */
-  function nextTick() {
+  function drain() {
     var buffer = queue;
 
     queue = [];
@@ -236,6 +237,8 @@
     for (var i = 0, length = buffer.length; i < length; i++) {
       buffer[i].run();
     }
+
+    draining = false;
   }
 
   // Install schedule
@@ -243,7 +246,7 @@
     schedule = schedules[i];
 
     if (schedule.support()) {
-      schedule = schedule.install(nextTick);
+      schedule = schedule.install(drain);
 
       break;
     }
@@ -285,7 +288,11 @@
     // Equivalent to push, but avoids a function call. It's faster then push
     queue[queue.length] = new Task(task, args);
 
-    schedule();
+    if (!draining) {
+      draining = true;
+
+      schedule();
+    }
   }
 
   /**
