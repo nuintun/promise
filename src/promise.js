@@ -44,10 +44,10 @@ function Promise(executor) {
   /**
    * @private
    * @type Object
-   * @property _resolver
+   * @property <resolver>
    * @description A reference to the resolver object that handles this promise
    */
-  this._resolver = resolver;
+  this['<resolver>'] = resolver;
 
   try {
     executor(
@@ -89,7 +89,7 @@ Promise.prototype = {
     // Using this.constructor allows for customized promises to be returned instead of plain ones
     var resolve;
     var reject;
-    var resolver = this._resolver;
+    var resolver = this['<resolver>'];
 
     var promise = new Promise(function(_resolve, _reject) {
       resolve = _resolve;

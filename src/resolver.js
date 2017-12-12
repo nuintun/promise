@@ -35,13 +35,13 @@ export default function Resolver() {
   /**
    * @private
    * @type {string}
-   * @property status
+   * @property state
    * @default 'pending'
    * @description
-   *  The status of the operation. This property may take only one of the following
+   *  The state of the operation. This property may take only one of the following
    *  values: 'pending', 'fulfilled' or 'rejected'.
    */
-  this.status = 'pending';
+  this.state = 'pending';
 
   /**
    * @private
@@ -72,12 +72,12 @@ Resolver.prototype = {
    * @param {any} value Value to pass along to the "onFulfilled" subscribers
    */
   fulfilled: function(value) {
-    if (this.status === 'pending') {
+    if (this.state === 'pending') {
       this.value = value;
-      this.status = 'fulfilled';
+      this.state = 'fulfilled';
     }
 
-    if (this.status === 'fulfilled') {
+    if (this.state === 'fulfilled') {
       this.notify(this.callbacks, this.value);
 
       // Reset the callback list so that future calls to fulfilled()
@@ -104,12 +104,12 @@ Resolver.prototype = {
    * @param {any} reason Value to pass along to the "onRejected" subscribers
    */
   rejected: function(reason) {
-    if (this.status === 'pending') {
+    if (this.state === 'pending') {
       this.value = reason;
-      this.status = 'rejected';
+      this.state = 'rejected';
     }
 
-    if (this.status === 'rejected') {
+    if (this.state === 'rejected') {
       this.notify(this.errbacks, this.value);
 
       // See fulfilled()
@@ -148,7 +148,7 @@ Resolver.prototype = {
   resolve: function(value) {
     var self = this;
 
-    if (self.status === 'pending') {
+    if (self.state === 'pending') {
       if (!value || (typeof value !== 'object' && !isFunction(value))) {
         return self.fulfilled(value);
       }
@@ -195,7 +195,7 @@ Resolver.prototype = {
    * @param {any} reason
    */
   reject: function(reason) {
-    if (this.status === 'pending') {
+    if (this.state === 'pending') {
       this.rejected(reason);
     }
   },
@@ -234,7 +234,7 @@ Resolver.prototype = {
     if (chained) {
       this.chained = chained;
 
-      switch (this.status) {
+      switch (this.state) {
         case 'fulfilled':
           this.fulfilled(this.value);
           break;
@@ -266,7 +266,7 @@ Resolver.prototype = {
       }
 
       // If non catch by user call default uncaught method
-      if (!self.chained && self.status === 'rejected') {
+      if (!self.chained && self.state === 'rejected') {
         self.uncaught();
       }
     }, this);
