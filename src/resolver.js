@@ -93,6 +93,7 @@ Resolver.prototype = {
       this.errbacks = null;
     }
   },
+
   /**
    * @protected
    * @method rejected
@@ -117,6 +118,7 @@ Resolver.prototype = {
       this.errbacks = [];
     }
   },
+
   /**
    * @protected
    * @method resolve
@@ -188,6 +190,7 @@ Resolver.prototype = {
       }
     }
   },
+
   /**
    * @protected
    * @method reject
@@ -199,6 +202,7 @@ Resolver.prototype = {
       this.rejected(reason);
     }
   },
+
   /**
    * @protected
    * @method addCallbacks
@@ -244,6 +248,7 @@ Resolver.prototype = {
       }
     }
   },
+
   /**
    * @protected
    * @method notify
@@ -271,6 +276,7 @@ Resolver.prototype = {
       }
     }, this);
   },
+
   /**
    * @protected
    * @method uncaught

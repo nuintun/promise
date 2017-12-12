@@ -16,6 +16,7 @@ export default {
   support: function() {
     return native(Mutation);
   },
+
   /**
    * @method install
    * @param {Function} handler

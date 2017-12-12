@@ -12,6 +12,7 @@ export default {
   support: function() {
     return true;
   },
+
   /**
    * @method install
    * @param {Function} handler

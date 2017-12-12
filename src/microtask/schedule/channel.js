@@ -18,6 +18,7 @@ export default {
     // IE MessageChannel slower than script state change
     return !native(VBArray) && native(MessageChannel);
   },
+
   /**
    * @method install
    * @param {Function} handler

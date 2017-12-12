@@ -12,6 +12,7 @@ export default {
   support: function() {
     return 'onreadystatechange' in document.createElement('script');
   },
+
   /**
    * @method install
    * @param {Function} handler

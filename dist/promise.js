@@ -53,6 +53,7 @@
     support: function() {
       return native(Mutation);
     },
+
     /**
      * @method install
      * @param {Function} handler
@@ -91,6 +92,7 @@
       // IE MessageChannel slower than script state change
       return !native(VBArray) && native(MessageChannel);
     },
+
     /**
      * @method install
      * @param {Function} handler
@@ -121,6 +123,7 @@
     support: function() {
       return 'onreadystatechange' in document.createElement('script');
     },
+
     /**
      * @method install
      * @param {Function} handler
@@ -162,6 +165,7 @@
     support: function() {
       return true;
     },
+
     /**
      * @method install
      * @param {Function} handler
@@ -418,6 +422,7 @@
         this.errbacks = null;
       }
     },
+
     /**
      * @protected
      * @method rejected
@@ -442,6 +447,7 @@
         this.errbacks = [];
       }
     },
+
     /**
      * @protected
      * @method resolve
@@ -513,6 +519,7 @@
         }
       }
     },
+
     /**
      * @protected
      * @method reject
@@ -524,6 +531,7 @@
         this.rejected(reason);
       }
     },
+
     /**
      * @protected
      * @method addCallbacks
@@ -569,6 +577,7 @@
         }
       }
     },
+
     /**
      * @protected
      * @method notify
@@ -596,6 +605,7 @@
         }
       }, this);
     },
+
     /**
      * @protected
      * @method uncaught
@@ -683,6 +693,7 @@
      * @property constructor
      */
     constructor: Promise,
+
     /**
      * @method then
      * @description
@@ -714,6 +725,7 @@
 
       return promise;
     },
+
     /**
      * @method catch
      * @description

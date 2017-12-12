@@ -72,6 +72,7 @@ Promise.prototype = {
    * @property constructor
    */
   constructor: Promise,
+
   /**
    * @method then
    * @description
@@ -103,6 +104,7 @@ Promise.prototype = {
 
     return promise;
   },
+
   /**
    * @method catch
    * @description
