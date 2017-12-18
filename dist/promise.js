@@ -1,11 +1,11 @@
 /**
-* @module promise
-* @author nuintun
-* @license MIT
-* @version 0.0.1
-* @description A pure JavaScript ES6 promise polyfill.
-* @see https://nuintun.github.io/promise
-*/
+ * @module promise
+ * @author nuintun
+ * @license MIT
+ * @version 0.0.1
+ * @description A pure JavaScript ES6 promise polyfill.
+ * @see https://nuintun.github.io/promise
+ */
 
 (function () {
   'use strict';
