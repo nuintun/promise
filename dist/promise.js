@@ -10,7 +10,7 @@
 (function () {
   'use strict';
 
-  if (window.Promise) return;
+  if (typeof window.Promise === 'function') return;
 
   /**
    * @module native
