@@ -52,7 +52,8 @@ const banner = `/**
 
 const inputOptions = {
   context: 'window',
-  input: 'src/promise.js'
+  input: 'src/promise.js',
+  acorn: { allowReturnOutsideFunction: true }
 };
 
 const outputOptions = {
@@ -62,8 +63,7 @@ const outputOptions = {
   strict: true,
   legacy: true,
   banner: banner,
-  file: 'dist/promise.js',
-  intro: `if (typeof window.Promise === 'function') return;`
+  file: 'dist/promise.js'
 };
 
 build(inputOptions, outputOptions);

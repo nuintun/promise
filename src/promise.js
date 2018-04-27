@@ -4,6 +4,7 @@
  * @version 2017/12/05
  */
 
+import './intro';
 import Resolver from './resolver';
 import { isFunction, isArray } from './utils';
 
@@ -117,6 +118,31 @@ Promise.prototype = {
    */
   catch: function(onRejected) {
     return this.then(void 0, onRejected);
+  },
+
+  /**
+   * @method finally
+   * @description Appends a handler to the promise, and returns a new promise which is resolved when
+   *  the original promise is resolved. The handler is called when the promise is settled,
+   *  whether fulfilled or rejected.
+   * @param {Function} onFinally A Function called when the Promise is settled
+   * @returns {Promise} Returns a Promise whose finally handler is set to the specified function, onFinally
+   */
+  finally: function(onFinally) {
+    var Promise = this.constructor;
+
+    return this.then(
+      function(value) {
+        Promise.resolve(onFinally()).then(function() {
+          return value;
+        });
+      },
+      function(reason) {
+        Promise.resolve(onFinally()).then(function() {
+          throw reason;
+        });
+      }
+    );
   }
 };
 
