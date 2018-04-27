@@ -26,7 +26,7 @@ async function build(inputOptions, outputOptions) {
   const min = file.replace(/\.js$/i, '.min.js');
   const map = `${file}.map`;
   const minify = uglify.minify(
-    { 'fetch.js': result.code },
+    { 'promise.js': result.code },
     { ecma: 5, ie8: true, mangle: { eval: true }, sourceMap: { url: map } }
   );
 
