@@ -6,6 +6,7 @@
 
 import './intro';
 import Resolver from './resolver';
+import always from './polyfills/finally';
 import { isFunction, isArray } from './utils';
 
 /**
@@ -128,22 +129,7 @@ Promise.prototype = {
    * @param {Function} onFinally A Function called when the Promise is settled
    * @returns {Promise} Returns a Promise whose finally handler is set to the specified function, onFinally
    */
-  finally: function(onFinally) {
-    var Promise = this.constructor;
-
-    return this.then(
-      function(value) {
-        Promise.resolve(onFinally()).then(function() {
-          return value;
-        });
-      },
-      function(reason) {
-        Promise.resolve(onFinally()).then(function() {
-          throw reason;
-        });
-      }
-    );
-  }
+  finally: always
 };
 
 /**
