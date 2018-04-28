@@ -29,12 +29,12 @@
 
     return this.then(
       function(value) {
-        Promise.resolve(onFinally()).then(function() {
+        return Promise.resolve(onFinally()).then(function() {
           return value;
         });
       },
       function(reason) {
-        Promise.resolve(onFinally()).then(function() {
+        return Promise.resolve(onFinally()).then(function() {
           throw reason;
         });
       }

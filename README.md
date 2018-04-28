@@ -4,6 +4,10 @@
 >
 > [![Dependencies][david-image]][david-url]
 
+# Examples
+
+> [examples/index.html](https://nuintun.github.io/promise/examples/index.html)
+
 ### Thanks
 
 > [Yahoo/ypromise](https://github.com/yahoo/ypromise)
