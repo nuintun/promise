@@ -7,12 +7,13 @@
     <title>Promise</title>
     <style>
       @font-face {
-        font-family: Ubuntu Mono;
+        font-family: "Ubuntu Mono";
         /* IE9 */
         src: url(./UbuntuMono-R.eot);
         /* chrome、firefox、opera、Safari, Android, iOS 4.2+ */
         src: url(./UbuntuMono-R.eot?#iefix) format("embedded-opentype"),
-          url(./UbuntuMono-R.svg#icomoon) format("svg"),
+          url(./UbuntuMono-R.svg#ubuntu) format("svg"),
+          url(./UbuntuMono-R.woff2) format("woff2"),
           url(./UbuntuMono-R.woff) format("woff"),
           url(./UbuntuMono-R.ttf) format("truetype");
 
@@ -43,28 +44,28 @@
       }
 
       code {
-        font: 16px/1.5 Ubuntu Mono, Consolas, Microsoft YaHei Mono, Courier New, monospace,
+        font: 15px/1.5 "Ubuntu Mono", Consolas, "Courier New", monospace;
       }
     </style>
     <script src="../dist/promise.min.js"></script>
   </head>
   <body>
     <pre>
-      F12 查看输出
-      <code>
-        setTimeout(function () {
-          console.log('end');
-        });
+        F12 查看输出
+        <code>
+          setTimeout(function () {
+            console.log('end');
+          });
 
-        Promise.resolve(2)['finally'](function () {
-          return console.log('finally');
-        }).then(function (value) {
-          return console.log(value);
-        });
+          Promise.resolve(2)['finally'](function () {
+            return console.log('finally');
+          }).then(function (value) {
+            return console.log(value);
+          });
 
-        console.log('start');
-      </code>
-    </pre>
+          console.log('start');
+        </code>
+      </pre>
     <script>
       setTimeout(function () {
         console.log('end');
