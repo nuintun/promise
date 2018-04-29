@@ -15,6 +15,12 @@
 export default function always(onFinally) {
   var Promise = this.constructor;
 
+  // Must be a function
+  if (typeof onFinally !== 'function') {
+    return this;
+  }
+
+  // Finally
   return this.then(
     function(value) {
       return Promise.resolve(onFinally()).then(function() {
