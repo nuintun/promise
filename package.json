@@ -6,6 +6,8 @@
     "name": "nuintun",
     "email": "nuintun@qq.com"
   },
+  "main": "dist/promise.js",
+  "files": ["dist/promise.js", "dist/promise.min.js", "dist/promise.js.map"],
   "homepage": "https://nuintun.github.io/promise#readme",
   "repository": {
     "type": "git",
@@ -17,7 +19,7 @@
   "license": "MIT",
   "devDependencies": {
     "rollup": "^0.58.2",
-    "fs-extra": "^5.0.0",
+    "fs-extra": "^6.0.0",
     "uglify-es": "^3.3.9"
   }
 }
