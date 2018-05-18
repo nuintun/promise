@@ -4,8 +4,6 @@
  * @version 2017/12/05
  */
 
-import native from './microtask/native';
-
 /**
  * @function isFunction
  * @param {any} value
