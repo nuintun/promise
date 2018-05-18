@@ -1,6 +1,6 @@
 {
   "name": "@nuintun/promise",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "A pure JavaScript ES6 promise polyfill.",
   "author": {
     "name": "nuintun",
@@ -15,6 +15,9 @@
   },
   "bugs": {
     "url": "https://github.com/nuintun/promise/issues"
+  },
+  "scripts": {
+    "prepublishOnly": "node rollup.js"
   },
   "license": "MIT",
   "devDependencies": {
