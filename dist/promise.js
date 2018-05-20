@@ -2,7 +2,7 @@
  * @module promise
  * @author nuintun
  * @license MIT
- * @version 0.2.0
+ * @version 0.2.1
  * @description A pure JavaScript ES6 promise polyfill.
  * @see https://nuintun.github.io/promise#readme
  */
@@ -111,7 +111,7 @@
      * @returns {Function}
      */
     install: function(handler) {
-      var called = 0;
+      var toggle = true;
       var observer = new Mutation(handler);
       var element = document.createTextNode('');
 
@@ -120,7 +120,7 @@
       });
 
       return function() {
-        element.data = called = ++called % 2;
+        element.data = toggle = !toggle;
       };
     }
   };
