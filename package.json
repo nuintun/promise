@@ -1,13 +1,17 @@
 {
   "name": "@nuintun/promise",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A pure JavaScript ES6 promise polyfill.",
   "author": {
     "name": "nuintun",
     "email": "nuintun@qq.com"
   },
   "main": "dist/promise.js",
-  "files": ["dist/promise.js", "dist/promise.min.js", "dist/promise.js.map"],
+  "files": [
+    "dist/promise.js",
+    "dist/promise.min.js",
+    "dist/promise.js.map"
+  ],
   "homepage": "https://nuintun.github.io/promise#readme",
   "repository": {
     "type": "git",
@@ -21,8 +25,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "rollup": "^0.62.0",
-    "fs-extra": "^6.0.1",
+    "rollup": "^0.63.4",
+    "fs-extra": "^7.0.0",
     "uglify-es": "^3.3.9"
   }
 }
