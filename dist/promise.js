@@ -2,7 +2,7 @@
  * @module promise
  * @author nuintun
  * @license MIT
- * @version 0.3.1
+ * @version 0.3.2
  * @description A pure JavaScript ES6 promise polyfill.
  * @see https://nuintun.github.io/promise#readme
  */
@@ -13,7 +13,7 @@
   /**
    * @module finally
    * @license MIT
-   * @version 2018/04/27
+   * @author nuintun
    */
 
   /**
@@ -50,7 +50,7 @@
   /**
    * @module intro
    * @license MIT
-   * @version 2018/04/27
+   * @author nuintun
    */
 
   // Use native Promise
@@ -64,9 +64,48 @@
   }
 
   /**
+   * @module task
+   * @license MIT
+   * @author nuintun
+   */
+
+  /**
+   * @class Task
+   * @constructor
+   * @param {Function} task
+   * @param {Array} args
+   * @returns {Task}
+   */
+  function Task(task, args) {
+    this.task = task;
+    this.args = args;
+  }
+
+  /**
+   * @method run
+   */
+  Task.prototype.run = function() {
+    var task = this.task;
+    var args = this.args;
+
+    switch (args.length) {
+      case 0:
+        return task();
+      case 1:
+        return task(args[0]);
+      case 2:
+        return task(args[0], args[1]);
+      case 3:
+        return task(args[0], args[1], args[2]);
+      default:
+        return task.apply(null, args);
+    }
+  };
+
+  /**
    * @module native
    * @license MIT
-   * @version 2017/12/05
+   * @author nuintun
    */
 
   // Used to match `RegExp`
@@ -91,7 +130,7 @@
   /**
    * @module mutation
    * @license MIT
-   * @version 2017/12/05
+   * @author nuintun
    */
 
   var Mutation = window.MutationObserver || window.WebKitMutationObserver;
@@ -128,7 +167,7 @@
   /**
    * @module channel
    * @license MIT
-   * @version 2017/12/05
+   * @author nuintun
    */
 
   var VBArray = window.VBArray;
@@ -163,7 +202,7 @@
   /**
    * @module script
    * @license MIT
-   * @version 2017/12/05
+   * @author nuintun
    */
 
   var script = {
@@ -205,7 +244,7 @@
   /**
    * @module timeout
    * @license MIT
-   * @version 2017/12/05
+   * @author nuintun
    */
 
   var timeout = {
@@ -230,48 +269,9 @@
   };
 
   /**
-   * @module task
-   * @license MIT
-   * @version 2017/12/05
-   */
-
-  /**
-   * @class Task
-   * @constructor
-   * @param {Function} task
-   * @param {Array} args
-   * @returns {Task}
-   */
-  function Task(task, args) {
-    this.task = task;
-    this.args = args;
-  }
-
-  /**
-   * @method run
-   */
-  Task.prototype.run = function() {
-    var task = this.task;
-    var args = this.args;
-
-    switch (args.length) {
-      case 0:
-        return task();
-      case 1:
-        return task(args[0]);
-      case 2:
-        return task(args[0], args[1]);
-      case 3:
-        return task(args[0], args[1], args[2]);
-      default:
-        return task.apply(null, args);
-    }
-  };
-
-  /**
    * @module index
    * @license MIT
-   * @version 2017/12/05
+   * @author nuintun
    */
 
   var schedule;
@@ -349,7 +349,7 @@
   /**
    * @module utils
    * @license MIT
-   * @version 2017/12/05
+   * @author nuintun
    */
 
   /**
@@ -384,7 +384,7 @@
   /**
    * @module resolver
    * @license MIT
-   * @version 2017/12/05
+   * @author nuintun
    */
 
   /**
@@ -676,7 +676,7 @@
   /**
    * @module promise
    * @license MIT
-   * @version 2017/12/05
+   * @author nuintun
    */
 
   /**

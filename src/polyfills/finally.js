@@ -1,7 +1,7 @@
 /**
  * @module finally
  * @license MIT
- * @version 2018/04/27
+ * @author nuintun
  */
 
 /**
