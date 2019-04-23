@@ -1,7 +1,7 @@
 /**
  * @module resolver
- * @license MIT
  * @author nuintun
+ * @license MIT
  */
 
 import microtask from './microtask/index';

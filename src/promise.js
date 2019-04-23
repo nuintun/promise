@@ -1,7 +1,7 @@
 /**
  * @module promise
- * @license MIT
  * @author nuintun
+ * @license MIT
  */
 
 import './intro';

@@ -12,8 +12,8 @@
 
   /**
    * @module finally
-   * @license MIT
    * @author nuintun
+   * @license MIT
    */
 
   /**
@@ -49,8 +49,8 @@
 
   /**
    * @module intro
-   * @license MIT
    * @author nuintun
+   * @license MIT
    */
 
   // Use native Promise
@@ -65,8 +65,8 @@
 
   /**
    * @module task
-   * @license MIT
    * @author nuintun
+   * @license MIT
    */
 
   /**
@@ -104,8 +104,8 @@
 
   /**
    * @module native
-   * @license MIT
    * @author nuintun
+   * @license MIT
    */
 
   // Used to match `RegExp`
@@ -129,8 +129,8 @@
 
   /**
    * @module mutation
-   * @license MIT
    * @author nuintun
+   * @license MIT
    */
 
   var Mutation = window.MutationObserver || window.WebKitMutationObserver;
@@ -166,8 +166,8 @@
 
   /**
    * @module channel
-   * @license MIT
    * @author nuintun
+   * @license MIT
    */
 
   var VBArray = window.VBArray;
@@ -201,8 +201,8 @@
 
   /**
    * @module script
-   * @license MIT
    * @author nuintun
+   * @license MIT
    */
 
   var script = {
@@ -243,8 +243,8 @@
 
   /**
    * @module timeout
-   * @license MIT
    * @author nuintun
+   * @license MIT
    */
 
   var timeout = {
@@ -270,8 +270,8 @@
 
   /**
    * @module index
-   * @license MIT
    * @author nuintun
+   * @license MIT
    */
 
   var schedule;
@@ -348,8 +348,8 @@
 
   /**
    * @module utils
-   * @license MIT
    * @author nuintun
+   * @license MIT
    */
 
   /**
@@ -383,8 +383,8 @@
 
   /**
    * @module resolver
-   * @license MIT
    * @author nuintun
+   * @license MIT
    */
 
   /**
@@ -675,8 +675,8 @@
 
   /**
    * @module promise
-   * @license MIT
    * @author nuintun
+   * @license MIT
    */
 
   /**

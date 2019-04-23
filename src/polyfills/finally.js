@@ -1,7 +1,7 @@
 /**
  * @module finally
- * @license MIT
  * @author nuintun
+ * @license MIT
  */
 
 /**
