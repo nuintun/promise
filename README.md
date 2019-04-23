@@ -1,6 +1,6 @@
 # promise
 
-> A pure JavaScript ES6 promise polyfill
+> A pure JavaScript ES6 promise polyfill.
 >
 > [![NPM Version][npm-image]][npm-url]
 > [![Dependencies][david-image]][david-url]
