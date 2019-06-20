@@ -1,6 +1,6 @@
 {
   "name": "@nuintun/promise",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A pure JavaScript ES6 promise polyfill.",
   "author": {
     "name": "nuintun",

@@ -5,10 +5,10 @@
  */
 
 import Task from './task';
-import mutation from './schedule/mutation';
-import channel from './schedule/channel';
 import script from './schedule/script';
+import channel from './schedule/channel';
 import timeout from './schedule/timeout';
+import mutation from './schedule/mutation';
 
 var schedule;
 var queue = [];

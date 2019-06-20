@@ -2,7 +2,7 @@
  * @module promise
  * @author nuintun
  * @license MIT
- * @version 1.0.0
+ * @version 1.1.0
  * @description A pure JavaScript ES6 promise polyfill.
  * @see https://nuintun.github.io/promise#readme
  */
@@ -103,103 +103,6 @@
   };
 
   /**
-   * @module native
-   * @author nuintun
-   * @license MIT
-   */
-
-  // Used to match `RegExp`
-  // [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
-  var REGEXP_CHAR_RE = /[\\^$.*+?()[\]{}|]/g;
-  // Used to detect if a method is native
-  var IS_NATIVE_RE = Function.prototype.toString.call(Function);
-
-  IS_NATIVE_RE = IS_NATIVE_RE.replace(REGEXP_CHAR_RE, '\\$&');
-  IS_NATIVE_RE = IS_NATIVE_RE.replace(/Function|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?');
-  IS_NATIVE_RE = new RegExp('^' + IS_NATIVE_RE + '$');
-
-  /**
-   * @function native
-   * @param {any} value
-   * @returns {boolean}
-   */
-  function native(value) {
-    return typeof value === 'function' && IS_NATIVE_RE.test(value);
-  }
-
-  /**
-   * @module mutation
-   * @author nuintun
-   * @license MIT
-   */
-
-  var Mutation = window.MutationObserver || window.WebKitMutationObserver;
-
-  var mutation = {
-    /**
-     * @method support
-     * @returns {boolean}
-     */
-    support: function() {
-      return native(Mutation);
-    },
-
-    /**
-     * @method install
-     * @param {Function} handler
-     * @returns {Function}
-     */
-    install: function(handler) {
-      var toggle = true;
-      var observer = new Mutation(handler);
-      var element = document.createTextNode('');
-
-      observer.observe(element, {
-        characterData: true
-      });
-
-      return function() {
-        element.data = toggle = !toggle;
-      };
-    }
-  };
-
-  /**
-   * @module channel
-   * @author nuintun
-   * @license MIT
-   */
-
-  var VBArray = window.VBArray;
-  var MessageChannel = window.MessageChannel;
-
-  var channel = {
-    /**
-     * @method support
-     * @returns {boolean}
-     */
-    support: function() {
-      // IE MessageChannel slower than script state change
-      return !native(VBArray) && native(MessageChannel);
-    },
-
-    /**
-     * @method install
-     * @param {Function} handler
-     * @returns {Function}
-     */
-    install: function(handler) {
-      var channel = new MessageChannel();
-
-      channel.port1.onmessage = handler;
-
-      return function() {
-        channel.port2.postMessage(0);
-      };
-    }
-  };
-
-  /**
    * @module script
    * @author nuintun
    * @license MIT
@@ -242,6 +145,66 @@
   };
 
   /**
+   * @module native
+   * @author nuintun
+   * @license MIT
+   */
+
+  // Used to match `RegExp`
+  // [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+  var REGEXP_CHAR_RE = /[\\^$.*+?()[\]{}|]/g;
+  // Used to detect if a method is native
+  var IS_NATIVE_RE = Function.prototype.toString.call(Function);
+
+  IS_NATIVE_RE = IS_NATIVE_RE.replace(REGEXP_CHAR_RE, '\\$&');
+  IS_NATIVE_RE = IS_NATIVE_RE.replace(/Function|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?');
+  IS_NATIVE_RE = new RegExp('^' + IS_NATIVE_RE + '$');
+
+  /**
+   * @function native
+   * @param {any} value
+   * @returns {boolean}
+   */
+  function native(value) {
+    return typeof value === 'function' && IS_NATIVE_RE.test(value);
+  }
+
+  /**
+   * @module channel
+   * @author nuintun
+   * @license MIT
+   */
+
+  var VBArray = window.VBArray;
+  var MessageChannel = window.MessageChannel;
+
+  var channel = {
+    /**
+     * @method support
+     * @returns {boolean}
+     */
+    support: function() {
+      // IE MessageChannel slower than script state change
+      return !native(VBArray) && native(MessageChannel);
+    },
+
+    /**
+     * @method install
+     * @param {Function} handler
+     * @returns {Function}
+     */
+    install: function(handler) {
+      var channel = new MessageChannel();
+
+      channel.port1.onmessage = handler;
+
+      return function() {
+        channel.port2.postMessage(0);
+      };
+    }
+  };
+
+  /**
    * @module timeout
    * @author nuintun
    * @license MIT
@@ -264,6 +227,43 @@
     install: function(handler) {
       return function() {
         setTimeout(handler, 0);
+      };
+    }
+  };
+
+  /**
+   * @module mutation
+   * @author nuintun
+   * @license MIT
+   */
+
+  var Mutation = window.MutationObserver || window.WebKitMutationObserver;
+
+  var mutation = {
+    /**
+     * @method support
+     * @returns {boolean}
+     */
+    support: function() {
+      return native(Mutation);
+    },
+
+    /**
+     * @method install
+     * @param {Function} handler
+     * @returns {Function}
+     */
+    install: function(handler) {
+      var toggle = true;
+      var observer = new Mutation(handler);
+      var element = document.createTextNode('');
+
+      observer.observe(element, {
+        characterData: true
+      });
+
+      return function() {
+        element.data = toggle = !toggle;
       };
     }
   };

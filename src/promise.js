@@ -7,7 +7,7 @@
 import './intro';
 import Resolver from './resolver';
 import always from './polyfills/finally';
-import { isFunction, isArray } from './utils';
+import { isArray, isFunction } from './utils';
 
 /**
  * @class Promise
