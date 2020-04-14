@@ -25,8 +25,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "rollup": "^1.21.4",
-    "terser": "^4.3.2",
-    "fs-extra": "^8.1.0"
+    "rollup": "^2.6.1",
+    "terser": "^4.6.11",
+    "fs-extra": "^9.0.0"
   }
 }

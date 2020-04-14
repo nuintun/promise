@@ -22,7 +22,7 @@ var toString = Object.prototype.toString;
  */
 export var isArray = isFunction(Array.isArray)
   ? Array.isArray
-  : function(value) {
+  : function (value) {
       return toString.call(value) === '[object Array]';
     };
 
@@ -31,4 +31,4 @@ var console = this.console;
 /**
  * @function printError
  */
-export var printError = console && console.error ? console.error : function() {};
+export var printError = console && console.error ? console.error : function () {};

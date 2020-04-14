@@ -62,7 +62,6 @@ const outputOptions = {
   banner,
   indent: true,
   strict: true,
-  legacy: true,
   format: 'iife',
   name: 'promise',
   file: 'dist/promise.js'

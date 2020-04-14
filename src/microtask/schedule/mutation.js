@@ -13,7 +13,7 @@ export default {
    * @method support
    * @returns {boolean}
    */
-  support: function() {
+  support: function () {
     return native(Mutation);
   },
 
@@ -22,7 +22,7 @@ export default {
    * @param {Function} handler
    * @returns {Function}
    */
-  install: function(handler) {
+  install: function (handler) {
     var toggle = true;
     var observer = new Mutation(handler);
     var element = document.createTextNode('');
@@ -31,7 +31,7 @@ export default {
       characterData: true
     });
 
-    return function() {
+    return function () {
       element.data = toggle = !toggle;
     };
   }

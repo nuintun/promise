@@ -22,13 +22,13 @@ export default function always(onFinally) {
 
   // Finally
   return this.then(
-    function(value) {
-      return Promise.resolve(onFinally()).then(function() {
+    function (value) {
+      return Promise.resolve(onFinally()).then(function () {
         return value;
       });
     },
-    function(reason) {
-      return Promise.resolve(onFinally()).then(function() {
+    function (reason) {
+      return Promise.resolve(onFinally()).then(function () {
         throw reason;
       });
     }

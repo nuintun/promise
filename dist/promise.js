@@ -34,13 +34,13 @@
 
     // Finally
     return this.then(
-      function(value) {
-        return Promise.resolve(onFinally()).then(function() {
+      function (value) {
+        return Promise.resolve(onFinally()).then(function () {
           return value;
         });
       },
-      function(reason) {
-        return Promise.resolve(onFinally()).then(function() {
+      function (reason) {
+        return Promise.resolve(onFinally()).then(function () {
           throw reason;
         });
       }
@@ -84,7 +84,7 @@
   /**
    * @method run
    */
-  Task.prototype.run = function() {
+  Task.prototype.run = function () {
     var task = this.task;
     var args = this.args;
 
@@ -113,7 +113,7 @@
      * @method support
      * @returns {boolean}
      */
-    support: function() {
+    support: function () {
       return 'onreadystatechange' in document.createElement('script');
     },
 
@@ -122,11 +122,11 @@
      * @param {Function} handler
      * @returns {Function}
      */
-    install: function(handler) {
-      return function() {
+    install: function (handler) {
+      return function () {
         var script = document.createElement('script');
 
-        script.onreadystatechange = function() {
+        script.onreadystatechange = function () {
           handler();
 
           // Remove event
@@ -183,7 +183,7 @@
      * @method support
      * @returns {boolean}
      */
-    support: function() {
+    support: function () {
       // IE MessageChannel slower than script state change
       return !native(VBArray) && native(MessageChannel);
     },
@@ -193,12 +193,12 @@
      * @param {Function} handler
      * @returns {Function}
      */
-    install: function(handler) {
+    install: function (handler) {
       var channel = new MessageChannel();
 
       channel.port1.onmessage = handler;
 
-      return function() {
+      return function () {
         channel.port2.postMessage(0);
       };
     }
@@ -215,7 +215,7 @@
      * @method support
      * @returns {boolean}
      */
-    support: function() {
+    support: function () {
       return true;
     },
 
@@ -224,8 +224,8 @@
      * @param {Function} handler
      * @returns {Function}
      */
-    install: function(handler) {
-      return function() {
+    install: function (handler) {
+      return function () {
         setTimeout(handler, 0);
       };
     }
@@ -244,7 +244,7 @@
      * @method support
      * @returns {boolean}
      */
-    support: function() {
+    support: function () {
       return native(Mutation);
     },
 
@@ -253,7 +253,7 @@
      * @param {Function} handler
      * @returns {Function}
      */
-    install: function(handler) {
+    install: function (handler) {
       var toggle = true;
       var observer = new Mutation(handler);
       var element = document.createTextNode('');
@@ -262,7 +262,7 @@
         characterData: true
       });
 
-      return function() {
+      return function () {
         element.data = toggle = !toggle;
       };
     }
@@ -370,7 +370,7 @@
    */
   var isArray = isFunction(Array.isArray)
     ? Array.isArray
-    : function(value) {
+    : function (value) {
         return toString.call(value) === '[object Array]';
       };
 
@@ -379,7 +379,7 @@
   /**
    * @function printError
    */
-  var printError = console && console.error ? console.error : function() {};
+  var printError = console && console.error ? console.error : function () {};
 
   /**
    * @module resolver
@@ -451,7 +451,7 @@
      *  `notify()` are disabled.
      * @param {any} value Value to pass along to the "onFulfilled" subscribers
      */
-    fulfilled: function(value) {
+    fulfilled: function (value) {
       if (this.state === 'pending') {
         this.value = value;
         this.state = 'fulfilled';
@@ -484,7 +484,7 @@
      *  and `notify()` are disabled.
      * @param {any} reason Value to pass along to the "onRejected" subscribers
      */
-    rejected: function(reason) {
+    rejected: function (reason) {
       if (this.state === 'pending') {
         this.value = reason;
         this.state = 'rejected';
@@ -527,7 +527,7 @@
      *  recursively calling its `then` method. If not, the resolver will be
      *  fulfilled with `value`.
      */
-    resolve: function(value) {
+    resolve: function (value) {
       var self = this;
 
       if (self.state === 'pending') {
@@ -543,7 +543,7 @@
           // If then is function
           if (isFunction(value.then)) {
             value.then(
-              function(value) {
+              function (value) {
                 if (!unwrapped) {
                   unwrapped = true;
 
@@ -551,7 +551,7 @@
                   self.resolve(value);
                 }
               },
-              function(reason) {
+              function (reason) {
                 if (!unwrapped) {
                   unwrapped = true;
 
@@ -577,7 +577,7 @@
      * @description Resolves the promise, signaling unsuccessful completion of the represented operation.
      * @param {any} reason
      */
-    reject: function(reason) {
+    reject: function (reason) {
       if (this.state === 'pending') {
         this.rejected(reason);
       }
@@ -593,7 +593,7 @@
      * @param {Function} [callback] function to execute if the Resolver resolves successfully
      * @param {Function} [errback] function to execute if the Resolver resolves unsuccessfully
      */
-    addCallbacks: function(callback, errback) {
+    addCallbacks: function (callback, errback) {
       var chained = false;
       var callbacks = this.callbacks;
       var errbacks = this.errbacks;
@@ -636,10 +636,10 @@
      * @param {Function[]} callbacks The array of subscriber callbacks
      * @param {any} result Value to pass the callbacks
      */
-    notify: function(callbacks, value) {
+    notify: function (callbacks, value) {
       // Since callback lists are reset synchronously, the callbacks list never
       // changes after notify() receives it.
-      microtask(function(self) {
+      microtask(function (self) {
         // Calling all callbacks after microtask to guarantee
         // asynchronicity. Because setTimeout can cause unnecessary
         // delays that *can* become noticeable in some situations
@@ -662,7 +662,7 @@
      * @method uncaught
      * @deprecated Output uncaught error
      */
-    uncaught: function() {
+    uncaught: function () {
       var error = this.value;
 
       if (error instanceof Error) {
@@ -723,10 +723,10 @@
 
     try {
       executor(
-        function(value) {
+        function (value) {
           resolver.resolve(value);
         },
-        function(reason) {
+        function (reason) {
           resolver.reject(reason);
         }
       );
@@ -758,13 +758,13 @@
      * @param {Function} [onRejected] function to execute if the promise resolves unsuccessfully
      * @returns {Promise} A promise wrapping the resolution of either "resolve" or "reject" callback
      */
-    then: function(onFulfilled, onRejected) {
+    then: function (onFulfilled, onRejected) {
       // Using this.constructor allows for customized promises to be returned instead of plain ones
       var resolve;
       var reject;
       var resolver = this['<resolver>'];
 
-      var promise = new Promise(function(_resolve, _reject) {
+      var promise = new Promise(function (_resolve, _reject) {
         resolve = _resolve;
         reject = _reject;
       });
@@ -787,7 +787,7 @@
      * @param {Function} onRejected Callback to be called in case this promise is rejected
      * @returns {Promise} A new promise modified by the behavior of the error callback
      */
-    catch: function(onRejected) {
+    catch: function (onRejected) {
       return this.then(void 0, onRejected);
     },
 
@@ -815,12 +815,12 @@
    * @param {any} value Object that may or may not be a promise
    * @returns {Promise}
    */
-  Promise.resolve = function(value) {
+  Promise.resolve = function (value) {
     if (value && value instanceof Promise) {
       return value;
     }
 
-    return new Promise(function(resolve) {
+    return new Promise(function (resolve) {
       resolve(value);
     });
   };
@@ -833,8 +833,8 @@
    * @returns {Promise} A rejected promise
    *
    */
-  Promise.reject = function(reason) {
-    return new Promise(function(resolve, reject) {
+  Promise.reject = function (reason) {
+    return new Promise(function (resolve, reject) {
       reject(reason);
     });
   };
@@ -850,8 +850,8 @@
    * @param {any[]} iterable An array of any kind of values, promises or not. If a value is not
    * @returns {Promise} A promise for an array of all the fulfillment values
    */
-  Promise.all = function(iterable) {
-    return new Promise(function(resolve, reject) {
+  Promise.all = function (iterable) {
+    return new Promise(function (resolve, reject) {
       if (!isArray(iterable)) {
         return reject(new TypeError('Promise.all expects an array of values or promises'));
       }
@@ -866,7 +866,7 @@
       var remaining = length;
 
       function oneResolve(index) {
-        return function(value) {
+        return function (value) {
           values[index] = value;
 
           if (--remaining === 0) {
@@ -891,8 +891,8 @@
    * @param {any[]} iterable An array of values or promises
    * @return {Promise}
    */
-  Promise.race = function(iterable) {
-    return new Promise(function(resolve, reject) {
+  Promise.race = function (iterable) {
+    return new Promise(function (resolve, reject) {
       if (!isArray(iterable)) {
         return reject(new TypeError('Promise.race expects an array of values or promises'));
       }
@@ -917,7 +917,7 @@
    */
   function makeCallback(promise, resolve, reject, callback) {
     // Make resolve and reject only get one argument
-    return function(valueOrReason) {
+    return function (valueOrReason) {
       var value;
 
       // Promises model exception handling through callbacks

@@ -14,7 +14,7 @@ export default {
    * @method support
    * @returns {boolean}
    */
-  support: function() {
+  support: function () {
     // IE MessageChannel slower than script state change
     return !native(VBArray) && native(MessageChannel);
   },
@@ -24,12 +24,12 @@ export default {
    * @param {Function} handler
    * @returns {Function}
    */
-  install: function(handler) {
+  install: function (handler) {
     var channel = new MessageChannel();
 
     channel.port1.onmessage = handler;
 
-    return function() {
+    return function () {
       channel.port2.postMessage(0);
     };
   }

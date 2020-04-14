@@ -9,7 +9,7 @@ export default {
    * @method support
    * @returns {boolean}
    */
-  support: function() {
+  support: function () {
     return 'onreadystatechange' in document.createElement('script');
   },
 
@@ -18,11 +18,11 @@ export default {
    * @param {Function} handler
    * @returns {Function}
    */
-  install: function(handler) {
-    return function() {
+  install: function (handler) {
+    return function () {
       var script = document.createElement('script');
 
-      script.onreadystatechange = function() {
+      script.onreadystatechange = function () {
         handler();
 
         // Remove event

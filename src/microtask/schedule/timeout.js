@@ -9,7 +9,7 @@ export default {
    * @method support
    * @returns {boolean}
    */
-  support: function() {
+  support: function () {
     return true;
   },
 
@@ -18,8 +18,8 @@ export default {
    * @param {Function} handler
    * @returns {Function}
    */
-  install: function(handler) {
-    return function() {
+  install: function (handler) {
+    return function () {
       setTimeout(handler, 0);
     };
   }

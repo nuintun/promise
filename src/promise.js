@@ -53,10 +53,10 @@ function Promise(executor) {
 
   try {
     executor(
-      function(value) {
+      function (value) {
         resolver.resolve(value);
       },
-      function(reason) {
+      function (reason) {
         resolver.reject(reason);
       }
     );
@@ -88,13 +88,13 @@ Promise.prototype = {
    * @param {Function} [onRejected] function to execute if the promise resolves unsuccessfully
    * @returns {Promise} A promise wrapping the resolution of either "resolve" or "reject" callback
    */
-  then: function(onFulfilled, onRejected) {
+  then: function (onFulfilled, onRejected) {
     // Using this.constructor allows for customized promises to be returned instead of plain ones
     var resolve;
     var reject;
     var resolver = this['<resolver>'];
 
-    var promise = new Promise(function(_resolve, _reject) {
+    var promise = new Promise(function (_resolve, _reject) {
       resolve = _resolve;
       reject = _reject;
     });
@@ -117,7 +117,7 @@ Promise.prototype = {
    * @param {Function} onRejected Callback to be called in case this promise is rejected
    * @returns {Promise} A new promise modified by the behavior of the error callback
    */
-  catch: function(onRejected) {
+  catch: function (onRejected) {
     return this.then(void 0, onRejected);
   },
 
@@ -145,12 +145,12 @@ Promise.prototype = {
  * @param {any} value Object that may or may not be a promise
  * @returns {Promise}
  */
-Promise.resolve = function(value) {
+Promise.resolve = function (value) {
   if (value && value instanceof Promise) {
     return value;
   }
 
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     resolve(value);
   });
 };
@@ -163,8 +163,8 @@ Promise.resolve = function(value) {
  * @returns {Promise} A rejected promise
  *
  */
-Promise.reject = function(reason) {
-  return new Promise(function(resolve, reject) {
+Promise.reject = function (reason) {
+  return new Promise(function (resolve, reject) {
     reject(reason);
   });
 };
@@ -180,8 +180,8 @@ Promise.reject = function(reason) {
  * @param {any[]} iterable An array of any kind of values, promises or not. If a value is not
  * @returns {Promise} A promise for an array of all the fulfillment values
  */
-Promise.all = function(iterable) {
-  return new Promise(function(resolve, reject) {
+Promise.all = function (iterable) {
+  return new Promise(function (resolve, reject) {
     if (!isArray(iterable)) {
       return reject(new TypeError('Promise.all expects an array of values or promises'));
     }
@@ -196,7 +196,7 @@ Promise.all = function(iterable) {
     var remaining = length;
 
     function oneResolve(index) {
-      return function(value) {
+      return function (value) {
         values[index] = value;
 
         if (--remaining === 0) {
@@ -221,8 +221,8 @@ Promise.all = function(iterable) {
  * @param {any[]} iterable An array of values or promises
  * @return {Promise}
  */
-Promise.race = function(iterable) {
-  return new Promise(function(resolve, reject) {
+Promise.race = function (iterable) {
+  return new Promise(function (resolve, reject) {
     if (!isArray(iterable)) {
       return reject(new TypeError('Promise.race expects an array of values or promises'));
     }
@@ -247,7 +247,7 @@ Promise.race = function(iterable) {
  */
 function makeCallback(promise, resolve, reject, callback) {
   // Make resolve and reject only get one argument
-  return function(valueOrReason) {
+  return function (valueOrReason) {
     var value;
 
     // Promises model exception handling through callbacks

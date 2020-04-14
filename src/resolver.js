@@ -71,7 +71,7 @@ Resolver.prototype = {
    *  `notify()` are disabled.
    * @param {any} value Value to pass along to the "onFulfilled" subscribers
    */
-  fulfilled: function(value) {
+  fulfilled: function (value) {
     if (this.state === 'pending') {
       this.value = value;
       this.state = 'fulfilled';
@@ -104,7 +104,7 @@ Resolver.prototype = {
    *  and `notify()` are disabled.
    * @param {any} reason Value to pass along to the "onRejected" subscribers
    */
-  rejected: function(reason) {
+  rejected: function (reason) {
     if (this.state === 'pending') {
       this.value = reason;
       this.state = 'rejected';
@@ -147,7 +147,7 @@ Resolver.prototype = {
    *  recursively calling its `then` method. If not, the resolver will be
    *  fulfilled with `value`.
    */
-  resolve: function(value) {
+  resolve: function (value) {
     var self = this;
 
     if (self.state === 'pending') {
@@ -163,7 +163,7 @@ Resolver.prototype = {
         // If then is function
         if (isFunction(value.then)) {
           value.then(
-            function(value) {
+            function (value) {
               if (!unwrapped) {
                 unwrapped = true;
 
@@ -171,7 +171,7 @@ Resolver.prototype = {
                 self.resolve(value);
               }
             },
-            function(reason) {
+            function (reason) {
               if (!unwrapped) {
                 unwrapped = true;
 
@@ -197,7 +197,7 @@ Resolver.prototype = {
    * @description Resolves the promise, signaling unsuccessful completion of the represented operation.
    * @param {any} reason
    */
-  reject: function(reason) {
+  reject: function (reason) {
     if (this.state === 'pending') {
       this.rejected(reason);
     }
@@ -213,7 +213,7 @@ Resolver.prototype = {
    * @param {Function} [callback] function to execute if the Resolver resolves successfully
    * @param {Function} [errback] function to execute if the Resolver resolves unsuccessfully
    */
-  addCallbacks: function(callback, errback) {
+  addCallbacks: function (callback, errback) {
     var chained = false;
     var callbacks = this.callbacks;
     var errbacks = this.errbacks;
@@ -256,10 +256,10 @@ Resolver.prototype = {
    * @param {Function[]} callbacks The array of subscriber callbacks
    * @param {any} result Value to pass the callbacks
    */
-  notify: function(callbacks, value) {
+  notify: function (callbacks, value) {
     // Since callback lists are reset synchronously, the callbacks list never
     // changes after notify() receives it.
-    microtask(function(self) {
+    microtask(function (self) {
       // Calling all callbacks after microtask to guarantee
       // asynchronicity. Because setTimeout can cause unnecessary
       // delays that *can* become noticeable in some situations
@@ -282,7 +282,7 @@ Resolver.prototype = {
    * @method uncaught
    * @deprecated Output uncaught error
    */
-  uncaught: function() {
+  uncaught: function () {
     var error = this.value;
 
     if (error instanceof Error) {

@@ -19,7 +19,7 @@ export default function Task(task, args) {
 /**
  * @method run
  */
-Task.prototype.run = function() {
+Task.prototype.run = function () {
   var task = this.task;
   var args = this.args;
 
