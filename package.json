@@ -27,6 +27,6 @@
   "devDependencies": {
     "rollup": "^2.6.1",
     "terser": "^4.6.11",
-    "fs-extra": "^9.0.0"
+    "fs-extra": "^10.0.0"
   }
 }
